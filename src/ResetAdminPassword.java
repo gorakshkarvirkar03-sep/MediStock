@@ -1,6 +1,6 @@
+
 import java.util.Scanner;
 import service.UserService;
-import model.User;
 
 public class ResetAdminPassword {
 
@@ -9,17 +9,27 @@ public class ResetAdminPassword {
         Scanner scanner = new Scanner(System.in);
         UserService userService = new UserService();
 
-        System.out.print("Enter admin password to verify: ");
-        String password = scanner.nextLine();
+        System.out.println("===== MediStock Admin Password Reset =====");
 
-        User user = userService.login("admin", password);
+        System.out.print("Enter new admin password: ");
+        String newPassword = scanner.nextLine();
 
-        if (user != null) {
-            System.out.println("SUCCESS: Admin authentication works!");
-            System.out.println("Username: " + user.getUsername());
-            System.out.println("Role: " + user.getRole());
+        System.out.print("Confirm new admin password: ");
+        String confirmPassword = scanner.nextLine();
+
+        if (!newPassword.equals(confirmPassword)) {
+            System.out.println("ERROR: Passwords do not match!");
+            scanner.close();
+            return;
+        }
+
+        boolean success =
+                userService.resetPassword("admin", newPassword);
+
+        if (success) {
+            System.out.println("SUCCESS: Admin password updated!");
         } else {
-            System.out.println("FAILED: Java authentication did not succeed.");
+            System.out.println("FAILED: Password reset unsuccessful.");
         }
 
         scanner.close();
