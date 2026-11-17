@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("loggedInUser", user);
 
             response.sendRedirect(
-                request.getContextPath() + "/index.html"
+                request.getContextPath() + "/dashboard.html"
             );
 
         } else {
@@ -67,4 +67,5 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
+
 
